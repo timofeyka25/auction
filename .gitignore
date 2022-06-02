@@ -1,2 +1,3 @@
-auction-api/.env
+.env
 .idea
+/.env

@@ -19,6 +19,7 @@ const (
 	roleTable     = "role"
 	productTable  = "product"
 	categoryTable = "product_category"
+	bidTable      = "bid"
 )
 
 func NewMysqlDB(cfg Config) (*sqlx.DB, error) {

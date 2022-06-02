@@ -60,6 +60,19 @@ type ProductCategory struct {
 	Category string `json:"category" db:"category"`
 }
 
+type Bid struct {
+	Id          int       `json:"id" db:"id"`
+	ProductId   int       `json:"product_id" db:"product_id"`
+	UserId      int       `json:"user_id" db:"user_id"`
+	Price       float64   `json:"price" db:"price"`
+	BidDatetime time.Time `json:"bid_datetime" db:"bid_datetime"`
+}
+
+type BidInput struct {
+	ProductId int     `json:"product_id" db:"product_id"`
+	Price     float64 `json:"price" db:"price"`
+}
+
 func (i UpdateProductInput) Validate() error {
 	if i.Title == nil && i.Description == nil && i.CategoryId == nil && i.StartDatetime == nil && i.EndDatetime == nil &&
 		i.CurrentPrice == nil && i.MinBidValue == nil && i.LastBidUserId == nil {

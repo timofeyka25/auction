@@ -28,6 +28,13 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		product.POST("/", h.createProduct)
 		product.PUT("/:id", h.updateProduct)
 		product.DELETE("/:id", h.deleteProduct)
+		product.GET("/bid/:id", h.getProductBids)
+	}
+	bid := router.Group("/bid", h.userIdentity)
+	{
+		bid.POST("/", h.newBid)
+		bid.GET("/", h.getUserBids)
+		bid.GET("/:id", h.getUserProductBids)
 	}
 	category := router.Group("/category")
 	{

@@ -21,14 +21,23 @@ type Product interface {
 	GetProductsByCategoryId(ID int) ([]auction.Product, error)
 }
 
+type Bid interface {
+	NewBid(bid auction.Bid) (int, error)
+	GetUserBids(userId int) ([]auction.Bid, error)
+	GetProductBids(productId int) ([]auction.Bid, error)
+	GetProductUserBids(userId, productId int) ([]auction.Bid, error)
+}
+
 type Repository struct {
 	Authorization
 	Product
+	Bid
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthMysql(db),
 		Product:       NewProductMysql(db),
+		Bid:           NewBidMysql(db),
 	}
 }

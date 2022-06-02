@@ -22,14 +22,23 @@ type Product interface {
 	GetProductsByCategoryId(id int) ([]auction.Product, error)
 }
 
+type Bid interface {
+	NewBid(UserId int, input auction.BidInput) (int, error)
+	GetUserBids(userId int) ([]auction.Bid, error)
+	GetProductBids(productId int) ([]auction.Bid, error)
+	GetProductUserBids(userId, productId int) ([]auction.Bid, error)
+}
+
 type Service struct {
 	Authorization
 	Product
+	Bid
 }
 
 func NewService(repos *repo.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
 		Product:       NewProductService(repos.Product),
+		Bid:           NewBidService(repos.Bid),
 	}
 }

@@ -30,7 +30,7 @@ func NewAuthService(repo repo.Authorization) *AuthService {
 }
 
 func (s *AuthService) CreateUser(user auction.User) (int, error) {
-	user.RoleId = 1
+	user.RoleId = int(auction.Client)
 	user.Password = generatePasswordHash(user.Username + user.Password)
 	return s.repo.CreateUser(user)
 }

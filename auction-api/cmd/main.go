@@ -56,7 +56,7 @@ func main() {
 }
 
 func initConfig() error {
-	viper.AddConfigPath("configs")
+	viper.AddConfigPath("auction-api/configs")
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }
