@@ -9,6 +9,7 @@ type Authorization interface {
 	CreateUser(user auction.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 	ParseToken(token string) (int, int, error)
+	ChangePassword(username, password, newPassword string) error
 }
 
 type Product interface {

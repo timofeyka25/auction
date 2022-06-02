@@ -35,3 +35,10 @@ func (a *AuthMysql) GetUser(username, password string) (auction.User, error) {
 
 	return user, err
 }
+
+func (a *AuthMysql) ChangePassword(username, password, newPassword string) error {
+	query := fmt.Sprintf("update %s set password_hash = ? where username = ? and password_hash = ?", userTable)
+	_, err := a.db.Exec(query, newPassword, username, password)
+
+	return err
+}

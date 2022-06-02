@@ -8,6 +8,7 @@ import (
 type Authorization interface {
 	CreateUser(user auction.User) (int, error)
 	GetUser(username, password string) (auction.User, error)
+	ChangePassword(username, password, newPassword string) error
 }
 
 type Product interface {

@@ -56,3 +56,26 @@ func (h *Handler) logout(c *gin.Context) {
 		"message": "success logout",
 	})
 }
+
+type changePwdInput struct {
+	Username    string `json:"username" binding:"required"`
+	Password    string `json:"password" binding:"required"`
+	NewPassword string `json:"new-password" binding:"required"`
+}
+
+func (h *Handler) changePassword(c *gin.Context) {
+	var input changePwdInput
+
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err := h.services.ChangePassword(input.Username, input.Password, input.NewPassword)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{"Changed"})
+}

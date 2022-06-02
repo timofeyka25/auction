@@ -76,6 +76,11 @@ func (s *AuthService) ParseToken(accessToken string) (int, int, error) {
 	return claims.UserId, claims.RoleId, nil
 }
 
+func (s *AuthService) ChangePassword(username, password, newPassword string) error {
+	return s.repo.ChangePassword(username, generatePasswordHash(username+password),
+		generatePasswordHash(username+newPassword))
+}
+
 func generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))

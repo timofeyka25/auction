@@ -20,6 +20,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sign-up", h.signUp)
 		auth.POST("/sign-in", h.signIn)
 		auth.POST("/logout", h.logout)
+		auth.POST("/change-pwd", h.changePassword)
 	}
 	product := router.Group("/product")
 	{
@@ -46,7 +47,6 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		api.POST("/", h.user)
 		api.GET("/role", h.getRole)
-
 	}
 	return router
 }
