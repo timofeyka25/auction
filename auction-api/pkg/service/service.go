@@ -10,6 +10,7 @@ type Authorization interface {
 	GenerateToken(username, password string) (string, error)
 	ParseToken(token string) (int, int, error)
 	ChangePassword(username, password, newPassword string) error
+	GetUserRole(username, password string) (int, error)
 }
 
 type Product interface {

@@ -43,10 +43,16 @@ func (h *Handler) signIn(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
+	roleId, err := h.services.Authorization.GetUserRole(input.Username, input.Password)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
 
 	c.SetCookie("jwt", token, 24*3600, "/", "localhost", false, true)
 	c.JSON(http.StatusOK, map[string]interface{}{
-		"token": token,
+		"token":   token,
+		"role_id": roleId,
 	})
 }
 
