@@ -40,6 +40,15 @@ func (h *Handler) signIn(c *gin.Context) {
 
 	token, err := h.services.Authorization.GenerateToken(input.Username, input.Password)
 	if err != nil {
+		if err.Error() == "this account is no longer active" {
+			newErrorResponse(c, http.StatusUnauthorized, err.Error())
+			return
+		}
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	roleId, err := h.services.Authorization.GetUserRole(input.Username, input.Password)
+	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -49,7 +58,8 @@ func (h *Handler) signIn(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("jwt", token, 24*3600, "/", "localhost", false, true)
+	c.SetSameSite(http.SameSiteStrictMode)
+	c.SetCookie("jwt", token, 24*3600, "/", "localhost", true, true)
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"token":   token,
 		"role_id": roleId,
