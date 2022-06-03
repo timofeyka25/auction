@@ -40,7 +40,6 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	fmt.Printf("%+v", user)
 
 	if user.IsActive == false {
 		return "", errors.New("this account is no longer active")

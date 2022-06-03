@@ -30,10 +30,19 @@ type Bid interface {
 	GetProductUserBids(userId, productId int) ([]auction.Bid, error)
 }
 
+type Admin interface {
+	NewAdmin(userId int) error
+	NewStaff(userId int) error
+	NewClient(userId int) error
+	DeactivateUser(userId int) error
+	ActivateUser(userId int) error
+}
+
 type Service struct {
 	Authorization
 	Product
 	Bid
+	Admin
 }
 
 func NewService(repos *repo.Repository) *Service {
@@ -41,5 +50,6 @@ func NewService(repos *repo.Repository) *Service {
 		Authorization: NewAuthService(repos.Authorization),
 		Product:       NewProductService(repos.Product),
 		Bid:           NewBidService(repos.Bid),
+		Admin:         NewAdminService(repos.Admin),
 	}
 }

@@ -29,10 +29,16 @@ type Bid interface {
 	GetProductUserBids(userId, productId int) ([]auction.Bid, error)
 }
 
+type Admin interface {
+	UpdateRole(userId, roleId int) error
+	UpdateIsActive(userId int, isActive bool) error
+}
+
 type Repository struct {
 	Authorization
 	Product
 	Bid
+	Admin
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -40,5 +46,6 @@ func NewRepository(db *sqlx.DB) *Repository {
 		Authorization: NewAuthMysql(db),
 		Product:       NewProductMysql(db),
 		Bid:           NewBidMysql(db),
+		Admin:         NewAdminMysql(db),
 	}
 }

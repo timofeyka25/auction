@@ -47,6 +47,14 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		api.POST("/", h.user)
 		api.GET("/role", h.getRole)
+		admin := api.Group("/")
+		{
+			admin.POST("new-admin", h.newAdmin)
+			admin.POST("new-staff", h.newStaff)
+			admin.POST("new-client", h.newClient)
+			admin.POST("deactivate", h.deactivateUser)
+			admin.POST("activate", h.activateUser)
+		}
 	}
 	return router
 }
