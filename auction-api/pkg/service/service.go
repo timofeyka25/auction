@@ -36,6 +36,9 @@ type Admin interface {
 	NewClient(userId int) error
 	DeactivateUser(userId int) error
 	ActivateUser(userId int) error
+	GetClients() ([]auction.UserInfo, error)
+	GetStaff() ([]auction.UserInfo, error)
+	GetAdmins() ([]auction.UserInfo, error)
 }
 
 type Service struct {

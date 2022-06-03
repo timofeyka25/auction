@@ -1,6 +1,7 @@
 package handler
 
 import (
+	auction "auction-api"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -82,4 +83,41 @@ func (h *Handler) activateUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, statusResponse{"ok"})
+}
+
+type getUsersResponse struct {
+	Data []auction.UserInfo `json:"data"`
+}
+
+func (h *Handler) getStaff(c *gin.Context) {
+	list, err := h.services.Admin.GetStaff()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, getUsersResponse{
+		Data: list,
+	})
+}
+
+func (h *Handler) getClients(c *gin.Context) {
+	list, err := h.services.Admin.GetClients()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, getUsersResponse{
+		Data: list,
+	})
+}
+
+func (h *Handler) getAdmins(c *gin.Context) {
+	list, err := h.services.Admin.GetAdmins()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, getUsersResponse{
+		Data: list,
+	})
 }

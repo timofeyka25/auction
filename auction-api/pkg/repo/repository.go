@@ -32,6 +32,7 @@ type Bid interface {
 type Admin interface {
 	UpdateRole(userId, roleId int) error
 	UpdateIsActive(userId int, isActive bool) error
+	GetUsers(roleId int) ([]auction.UserInfo, error)
 }
 
 type Repository struct {

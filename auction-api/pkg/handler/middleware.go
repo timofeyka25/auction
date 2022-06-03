@@ -1,6 +1,7 @@
 package handler
 
 import (
+	auction "auction-api"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -26,6 +27,30 @@ func (h *Handler) userIdentity(c *gin.Context) {
 
 	c.Set(userCtx, userId)
 	c.Set(userRole, roleId)
+}
+
+func (h *Handler) staffIdentity(c *gin.Context) {
+	role, err := getUserRole(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	if role != int(auction.Staff) && role != int(auction.Admin) {
+		newErrorResponse(c, http.StatusForbidden, "Access denied")
+		return
+	}
+}
+
+func (h *Handler) adminIdentity(c *gin.Context) {
+	role, err := getUserRole(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	if role != int(auction.Admin) {
+		newErrorResponse(c, http.StatusForbidden, "Access denied")
+		return
+	}
 }
 
 func getUserId(c *gin.Context) (int, error) {

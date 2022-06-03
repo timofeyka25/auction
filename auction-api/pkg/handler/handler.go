@@ -22,39 +22,48 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/logout", h.logout)
 		auth.POST("/change-pwd", h.changePassword)
 	}
-	product := router.Group("/product")
-	{
-		product.GET("/", h.getAllProducts)
-		product.GET("/:id", h.getProductByID)
-		product.POST("/", h.createProduct)
-		product.PUT("/:id", h.updateProduct)
-		product.DELETE("/:id", h.deleteProduct)
-		product.GET("/bid/:id", h.getProductBids)
-	}
-	bid := router.Group("/bid", h.userIdentity)
-	{
-		bid.POST("/", h.newBid)
-		bid.GET("/", h.getUserBids)
-		bid.GET("/:id", h.getUserProductBids)
-	}
 	category := router.Group("/category")
 	{
-		category.POST("/", h.createCategory)
 		category.GET("/", h.getAllCategories)
 		category.GET("/:id", h.getProductsByCategoryId)
 	}
 	api := router.Group("/api", h.userIdentity)
 	{
-		api.POST("/", h.user)
-		api.GET("/role", h.getRole)
-		admin := api.Group("/")
+		product := api.Group("/product")
+		{
+			product.GET("/", h.getAllProducts)
+			product.GET("/:id", h.getProductByID)
+			product.GET("/bid/:id", h.getProductBids)
+		}
+		bid := api.Group("/bid")
+		{
+			bid.POST("/", h.newBid)
+			bid.GET("/", h.getUserBids)
+			bid.GET("/:id", h.getUserProductBids)
+		}
+		staff := api.Group("/", h.staffIdentity)
+		{
+			product := staff.Group("product")
+			{
+				product.POST("/", h.createProduct)
+				product.PUT("/:id", h.updateProduct)
+				product.DELETE("/:id", h.deleteProduct)
+			}
+			staff.POST("/category/", h.createCategory)
+		}
+		admin := api.Group("/", h.adminIdentity)
 		{
 			admin.POST("new-admin", h.newAdmin)
 			admin.POST("new-staff", h.newStaff)
 			admin.POST("new-client", h.newClient)
 			admin.POST("deactivate", h.deactivateUser)
 			admin.POST("activate", h.activateUser)
+			admin.GET("clients", h.getClients)
+			admin.GET("staff", h.getStaff)
+			admin.GET("admins", h.getAdmins)
 		}
+		api.POST("/", h.user)
+		api.GET("/role", h.getRole)
 	}
 	return router
 }

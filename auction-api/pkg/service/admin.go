@@ -32,3 +32,15 @@ func (a *AdminService) DeactivateUser(userId int) error {
 func (a *AdminService) ActivateUser(userId int) error {
 	return a.repo.UpdateIsActive(userId, true)
 }
+
+func (a *AdminService) GetClients() ([]auction.UserInfo, error) {
+	return a.repo.GetUsers(int(auction.Client))
+}
+
+func (a *AdminService) GetStaff() ([]auction.UserInfo, error) {
+	return a.repo.GetUsers(int(auction.Staff))
+}
+
+func (a *AdminService) GetAdmins() ([]auction.UserInfo, error) {
+	return a.repo.GetUsers(int(auction.Admin))
+}

@@ -1,6 +1,7 @@
 package repo
 
 import (
+	auction "auction-api"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
@@ -25,4 +26,12 @@ func (a *AdminMysql) UpdateIsActive(userId int, isActive bool) error {
 	_, err := a.db.Exec(query, isActive, userId)
 
 	return err
+}
+
+func (a *AdminMysql) GetUsers(roleId int) ([]auction.UserInfo, error) {
+	var users []auction.UserInfo
+	query := fmt.Sprintf("select id, first_name, last_name, username, role_id, is_active from %s where role_id = ?", userTable)
+	err := a.db.Select(&users, query, roleId)
+
+	return users, err
 }
