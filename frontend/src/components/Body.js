@@ -6,7 +6,7 @@ import {logout, selectUser} from "../store/userSlice";
 import {Register} from "./Register";
 import {axiosPrivate} from "../api/axios";
 import MainBody from "./MainBody";
-import {reset} from "../store/pageSlice";
+import {load, reset} from "../store/pageSlice";
 // import Account from "./Account";
 
 const LOGOUT_URL = "/auth/logout";
@@ -14,8 +14,6 @@ const LOGOUT_URL = "/auth/logout";
 export default function Body() {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
-
-    // const [data, setData] = useState([]);
 
     const handleLogout = async (e) => {
         e.preventDefault();
@@ -30,7 +28,7 @@ export default function Body() {
 
     const handleCategories = (e) => {
         e.preventDefault()
-        dispatch(reset())
+        dispatch(load({page: -1}))
     }
 
 
@@ -39,7 +37,7 @@ export default function Body() {
             <nav className="container navbar sticky-top navbar-light bg-light">
                 <div className="container-fluid">
                     <div className="navbar-brand">
-                        <img src={logoImg} alt="logo" height="75"/>
+                        <img src={logoImg} alt="logo" height="60"/>
                     </div>
                     <div className="d-flex">
                         <div className="col">
@@ -62,7 +60,7 @@ export default function Body() {
                                 </>
                             ) : (
                                 <>
-                                    <Login/>
+                                    <Login />
                                     <Register/>
                                 </>
                             )}
@@ -70,7 +68,7 @@ export default function Body() {
                     </div>
                 </div>
             </nav>
-            <MainBody/>
+            <MainBody />
         </div>
     );
 }

@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import axios from "../api/axios";
 import {selectPage} from "../store/pageSlice";
 import {ProductCard} from "./ProductCard";
+import {EmptyCategoryCard} from "./EmptyCategoryCard";
+import {AddProduct} from "./AddProduct";
 
 const CATEGORY_URL = "/category/"
 
@@ -13,36 +15,42 @@ export default function Products() {
     const currentUser = useSelector(selectUser);
     const currentPage = useSelector(selectPage);
 
-    useEffect(() => {
+    const handle = () => {
+        fetchProducts();
+    }
+
+    const fetchProducts = () => {
         axios
             .get(CATEGORY_URL + currentPage?.category_id)
             .then((res) => {
-                console.log(res.data?.data);
                 setData(res.data?.data);
             })
             .catch((err) => {
                 console.error(err);
             });
+    }
+    useEffect(() => {
+        fetchProducts();
     }, []);
     return (
         <div>
-            <div className="col d-flex justify-content-between my-3">
+            <div className="col my-3">
                 {(currentUser?.role === 2 || currentUser?.role === 3) && (
-                    <div className="col d-flex justify-content-center my-3">
-                        <div className="btn btn-outline-secondary mx-2">
-                            + Product
-                        </div>
-                    </div>
+                    <AddProduct handle={handle}/>
                 )}
             </div>
             {data && (
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     {data.map((el) => {
-                        return <ProductCard item={el} key={el.id}/>;
+                        return <ProductCard item={el} key={el.id} handle={handle}/>;
                     })}
                 </div>
             )
             }
+            {!data && (
+                <div>
+                    <EmptyCategoryCard/>
+                </div>)}
         </div>
     )
 }

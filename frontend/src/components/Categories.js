@@ -1,18 +1,54 @@
 import CategoryCard from "./CategoryCard";
 import {useSelector} from "react-redux";
 import {selectUser} from "../store/userSlice";
+import {AddCategory} from "./AddCategory";
+import {useEffect, useState} from "react";
+import axios, {axiosPrivate} from "../api/axios";
 
-export default function Categories({data}) {
+const CATEGORY_URL = "/category/";
+const ALL_CATEGORY_URL = "/api/category/";
+export default function Categories() {
     const currentUser = useSelector(selectUser);
+
+    const [data, setData] = useState([]);
+
+    const handle = () => {
+        fetchAllCategories();
+    }
+
+    const fetchAllCategories = () => {
+        axiosPrivate
+            .get(ALL_CATEGORY_URL)
+            .then((res) => {
+                setData(res.data?.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+
+    const fetchCategories = () => {
+        axios
+            .get(CATEGORY_URL)
+            .then((res) => {
+                setData(res.data?.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+
+    useEffect(() => {
+        if (currentUser?.role === 2 || currentUser?.role === 3)
+            fetchAllCategories();
+        else fetchCategories();
+    }, []);
+
     return (
         <div>
-            <div className="col d-flex justify-content-between my-3">
+            <div className="col my-3">
                 {(currentUser?.role === 2 || currentUser?.role === 3) && (
-                    <div className="col d-flex justify-content-center my-3">
-                        <div className="btn btn-outline-secondary mx-2">
-                            + Category
-                        </div>
-                    </div>
+                    <AddCategory handle={handle}/>
                 )}
             </div>
             {data && (

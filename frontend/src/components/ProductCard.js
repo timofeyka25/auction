@@ -1,12 +1,19 @@
 import React from "react";
 import Countdown from "react-countdown";
 import {ProgressBar} from "react-bootstrap";
-import {useDispatch} from "react-redux";
-import {load} from "../store/pageSlice";
+import Bid from "./Bid";
+import {useSelector} from "react-redux";
+import {selectUser} from "../store/userSlice";
 
 const renderer = ({days, hours, minutes, seconds, completed, props}) => {
     if (completed) {
-        return null;
+        return (
+            <div>
+                <ProgressBar now={100} className="mt-1"/>
+                <div className="d-flex justify-content-center ">
+                    <h5>Completed</h5>
+                </div>
+            </div>);
     }
     // if (props.item.status !== "ongoing") {
     //     return null;
@@ -15,55 +22,57 @@ const renderer = ({days, hours, minutes, seconds, completed, props}) => {
         ((new Date() - new Date(props.item.start_datetime)) /
             (new Date(props.item.end_datetime) - new Date(props.item.start_datetime))) *
         100;
-    return (<div><ProgressBar now={progress}/>
-        <div className="d-flex justify-content-between mt-2">
-            <h5>
-                {days
-                    ? days +
-                    " d " +
-                    hours +
-                    " h " +
-                    minutes +
-                    " m " +
-                    seconds +
-                    " s"
-                    : hours + " h " + minutes + " m " + seconds + " s"}
-            </h5>
-        </div>
-    </div>);
+    return (
+        <div>
+            <ProgressBar now={progress} className="mt-1"/>
+            <div className="d-flex justify-content-center">
+                <h5>
+                    {days
+                        ? days +
+                        " d " +
+                        hours +
+                        " h " +
+                        minutes +
+                        " m " +
+                        seconds +
+                        " s"
+                        : hours + " h " + minutes + " m " + seconds + " s"}
+                </h5>
+            </div>
+        </div>);
 };
 
-export const ProductCard = ({item}) => {
+export const ProductCard = ({item, handle}) => {
     let expiredDate = item.end_datetime;
-    const dispatch = useDispatch();
+    const currentUser = useSelector(selectUser);
 
-    const handleClick = () => {
-        dispatch(load({page: 1}))
-    }
     return (
-        <div className="col" onClick={handleClick}>
-            <div className="card shadow h-100">
-                <div className="card-body">
-                    <Countdown
-                        date={expiredDate}
-                        item={item}
-                        key={item.id}
-                        renderer={renderer}
-                    />
-                    <p className="display-6">{item.title}</p>
-                    <p className="card-text">{item.description}</p>
-                </div>
-                <div className="card-body d-flex justify-content-between align-items-lg-end">
-                    {/*<div>*/}
-                    {/*    <Bid auction={props.item} key={props.item.ID}/>*/}
-                    {/*</div>*/}
-                    <div>
-                        <p className="h3">Price: ${item.current_price}</p>
+        <>
+            {((currentUser?.role !== 2 && currentUser?.role !== 3) && (new Date(item.end_datetime) < new Date())) ? null :
+                (<div className="col">
+                    <div className="card shadow h-100">
+                        <div className="card-header">
+                            <Countdown
+                                date={expiredDate}
+                                item={item}
+                                key={item.id}
+                                renderer={renderer}
+                            />
+                        </div>
+                        <div className="card-body">
+                            <p className="display-6">{item.title}</p>
+                            <p className="card-text">{item.description}</p>
+                        </div>
+                        <div className="card-body d-flex justify-content-between align-items-lg-end">
+                            <div>
+                                <Bid item={item} key={item.id} handle={handle}/>
+                            </div>
+                            <div>
+                                <p className="h3">Price: ${item.current_price}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-    )
-        ;
+                </div>)}
+        </>
+    );
 };
