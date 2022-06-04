@@ -40,7 +40,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	}
 	category := router.Group("/category")
 	{
-		category.GET("/", h.getAllCategories)
+		category.GET("/", h.getCategories)
 		category.GET("/:id", h.getProductsByCategoryId)
 	}
 	api := router.Group("/api", h.userIdentity)
@@ -65,7 +65,8 @@ func (h *Handler) InitRoutes() *gin.Engine {
 				product.PUT("/:id", h.updateProduct)
 				product.DELETE("/:id", h.deleteProduct)
 			}
-			staff.POST("/category/", h.createCategory)
+			staff.POST("category/", h.createCategory)
+			staff.GET("category/", h.getAllCategories)
 		}
 		admin := api.Group("/", h.adminIdentity)
 		{

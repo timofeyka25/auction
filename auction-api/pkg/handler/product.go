@@ -126,6 +126,18 @@ type getAllCategoriesResponse struct {
 }
 
 func (h *Handler) getAllCategories(c *gin.Context) {
+	categories, err := h.services.GetAllCategories()
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, getAllCategoriesResponse{
+		Data: categories,
+	})
+}
+
+func (h *Handler) getCategories(c *gin.Context) {
 	categories, err := h.services.GetCategories()
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())

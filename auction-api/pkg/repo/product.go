@@ -120,7 +120,7 @@ func (m *ProductMysql) CreateCategory(category string) (int, error) {
 	return int(id), nil
 }
 
-func (m *ProductMysql) GetCategories() ([]auction.ProductCategory, error) {
+func (m *ProductMysql) GetAllCategories() ([]auction.ProductCategory, error) {
 	var categories []auction.ProductCategory
 	query := fmt.Sprintf("select c.id, c.category from %s c order by c.id not in(select category_id from %s);",
 		categoryTable, productTable)
@@ -129,9 +129,18 @@ func (m *ProductMysql) GetCategories() ([]auction.ProductCategory, error) {
 	return categories, err
 }
 
+func (m *ProductMysql) GetCategories() ([]auction.ProductCategory, error) {
+	var categories []auction.ProductCategory
+	query := fmt.Sprintf("select c.id, c.category from %s c join %s p on c.id = p.category_id group by c.id, c.category",
+		categoryTable, productTable)
+	err := m.db.Select(&categories, query)
+
+	return categories, err
+}
+
 func (m *ProductMysql) GetProductsByCategoryId(ID int) ([]auction.Product, error) {
 	var products []auction.Product
-	query := fmt.Sprintf("select * from %s where category_id = ?", productTable)
+	query := fmt.Sprintf("select * from %s where category_id = ? order by end_datetime", productTable)
 	err := m.db.Select(&products, query, ID)
 
 	return products, err

@@ -3,6 +3,7 @@ package service
 import (
 	auction "auction-api"
 	"auction-api/pkg/repo"
+	"strconv"
 	"time"
 )
 
@@ -15,9 +16,9 @@ func NewProductService(repo repo.Product) *ProductService {
 }
 
 func (s *ProductService) CreateProduct(product auction.Product) (int, error) {
-	product.Status = string(rune(auction.Ongoing))
+	product.Status = strconv.Itoa(int(auction.Ongoing))
 	product.StartDatetime = time.Now()
-	product.EndDatetime = time.Now().Add(time.Hour * 24)
+	//product.EndDatetime = time.Now().Add(time.Hour * 24)
 	return s.repo.CreateProduct(product)
 }
 
@@ -43,6 +44,10 @@ func (s *ProductService) DeleteProduct(ID int) error {
 
 func (s *ProductService) CreateCategory(category string) (int, error) {
 	return s.repo.CreateCategory(category)
+}
+
+func (s *ProductService) GetAllCategories() ([]auction.ProductCategory, error) {
+	return s.repo.GetAllCategories()
 }
 
 func (s *ProductService) GetCategories() ([]auction.ProductCategory, error) {

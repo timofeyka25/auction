@@ -18,6 +18,7 @@ type Product interface {
 	UpdateProduct(ID int, input auction.UpdateProductInput) error
 	DeleteProduct(ID int) error
 	CreateCategory(category string) (int, error)
+	GetAllCategories() ([]auction.ProductCategory, error)
 	GetCategories() ([]auction.ProductCategory, error)
 	GetProductsByCategoryId(ID int) ([]auction.Product, error)
 }
