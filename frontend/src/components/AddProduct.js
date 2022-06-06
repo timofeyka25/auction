@@ -37,11 +37,11 @@ export const AddProduct = ({handle}) => {
             handle();
         } catch (err) {
             console.log(err)
-            // setError(err);
+            setError("Something went wrong");
+            return
         }
         closeForm();
     };
-    let d = new Date();
     return (<>
         <div className="col d-flex justify-content-center my-3">
             <div onClick={openForm} className="btn btn-outline-secondary mx-2">
@@ -91,7 +91,6 @@ export const AddProduct = ({handle}) => {
                                 <Form.Control
                                     type="datetime-local"
                                     timeformat="YYYY-MM-DD HH:mm"
-                                    defaultValue={d}
                                     required
                                     ref={endDatetime}
                                 />

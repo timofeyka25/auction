@@ -43,7 +43,7 @@ func (b *BidMysql) NewBid(bid auction.Bid) (int, error) {
 
 func (b *BidMysql) GetUserBids(userId int) ([]auction.Bid, error) {
 	var bids []auction.Bid
-	query := fmt.Sprintf("select * from %s where user_id = ?", bidTable)
+	query := fmt.Sprintf("select * from %s where user_id = ? order by bid_datetime desc", bidTable)
 	err := b.db.Select(&bids, query, userId)
 
 	return bids, err

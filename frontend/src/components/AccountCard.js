@@ -12,19 +12,20 @@ export default function AccountCard() {
 
     return (
         <div className="col d-flex justify-content-center mt-2">
-            <div className="card shadow-lg h-100 mt-2">
-                <div className="card-body display-6 mx-2 mt-2">
-                    <div>Username: {data?.username}</div>
-                    <div>First name: {data?.first_name}</div>
+            <div className="card shadow-lg h-100 mt-2 w-auto">
+                <div className="card-body mx-3 mt-2">
+                    <h4>Username: {data?.username}</h4>
+                    <h4>First name: {data?.first_name}</h4>
                     {data?.last_name &&
-                        <div>Last name: {data?.last_name}</div>
+                        <h4>Last name: {data?.last_name}</h4>
                     }
-                    {data?.role_id && data.role_id === 1 ? <div>Role: client</div> : null}
-                    {data?.role_id && data.role_id === 2 ? <div>Role: staff</div> : null}
-                    {data?.role_id && data.role_id === 3 ? <div>Role: admin</div> : null}
-                </div>
-                <div className="card-body justify-content-center d-flex">
-                    <div className="btn btn-outline-dark">Change password</div>
+                    {data?.role_id && data.role_id === 1 ? <h4>Role: client</h4> : null}
+                    {data?.role_id && data.role_id === 2 ? <h4>Role: staff</h4> : null}
+                    {data?.role_id && data.role_id === 3 ? <h4>Role: admin</h4> : null}
+                    <hr/>
+                    <div className="justify-content-center d-flex my-2">
+                        <div className="btn btn-outline-dark">Change password</div>
+                    </div>
                 </div>
             </div>
         </div>

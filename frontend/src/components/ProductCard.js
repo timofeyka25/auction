@@ -19,7 +19,7 @@ const renderer = ({days, hours, minutes, seconds, completed, props}) => {
     if (props.item.status === "cancelled") {
         return (
             <div>
-                <ProgressBar now={100} className="mt-1 disabled"/>
+                <ProgressBar now={0} className="mt-1 disabled"/>
                 <div className="d-flex justify-content-center ">
                     <h5>Cancelled</h5>
                 </div>
