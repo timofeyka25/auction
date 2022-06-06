@@ -42,7 +42,7 @@ export default function Categories() {
         if (currentUser?.role === 2 || currentUser?.role === 3)
             fetchAllCategories();
         else fetchCategories();
-    }, []);
+    });
 
     return (
         <div>

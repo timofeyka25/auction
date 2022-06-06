@@ -7,7 +7,6 @@ import {Register} from "./Register";
 import {axiosPrivate} from "../api/axios";
 import MainBody from "./MainBody";
 import {load, reset} from "../store/pageSlice";
-// import Account from "./Account";
 
 const LOGOUT_URL = "/auth/logout";
 
@@ -31,6 +30,11 @@ export default function Body() {
         dispatch(load({page: -1}))
     }
 
+    const handleAccount = (e) => {
+        e.preventDefault()
+        dispatch(load({page: 3}))
+    }
+
 
     return (
         <div>
@@ -47,8 +51,10 @@ export default function Body() {
                             </div>
                             {currentUser ? (
                                 <>
-                                    {/*<Account />*/}
-                                    <div className="btn btn-outline-secondary mx-2 ">
+                                    <div
+                                        onClick={(e) => handleAccount(e)}
+                                        className="btn btn-outline-secondary mx-2 "
+                                    >
                                         {currentUser.username}
                                     </div>
                                     <div
@@ -60,7 +66,7 @@ export default function Body() {
                                 </>
                             ) : (
                                 <>
-                                    <Login />
+                                    <Login/>
                                     <Register/>
                                 </>
                             )}
@@ -68,7 +74,7 @@ export default function Body() {
                     </div>
                 </div>
             </nav>
-            <MainBody />
+            <MainBody/>
         </div>
     );
 }
