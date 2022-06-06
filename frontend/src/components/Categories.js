@@ -46,6 +46,16 @@ export default function Categories() {
 
     return (
         <div>
+            <div>
+                <h2 className="d-flex justify-content-center">
+                    Categories
+                </h2>
+            </div>
+            {!data && (<div className="d-flex justify-content-center p-3">
+                <h2>
+                    There are no categories available right now, check back later
+                </h2>
+            </div>)}
             <div className="col my-3">
                 {(currentUser?.role === 2 || currentUser?.role === 3) && (
                     <AddCategory handle={handle}/>

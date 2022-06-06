@@ -47,13 +47,26 @@ func (s *ProductService) CreateCategory(category string) (int, error) {
 }
 
 func (s *ProductService) GetAllCategories() ([]auction.ProductCategory, error) {
+	if err := s.UpdateProducts(); err != nil {
+		return nil, err
+	}
 	return s.repo.GetAllCategories()
 }
 
 func (s *ProductService) GetCategories() ([]auction.ProductCategory, error) {
+	if err := s.UpdateProducts(); err != nil {
+		return nil, err
+	}
 	return s.repo.GetCategories()
 }
 
 func (s *ProductService) GetProductsByCategoryId(id int) ([]auction.Product, error) {
+	if err := s.UpdateProducts(); err != nil {
+		return nil, err
+	}
 	return s.repo.GetProductsByCategoryId(id)
+}
+
+func (s *ProductService) UpdateProducts() error {
+	return s.repo.Update(time.Now())
 }

@@ -4,6 +4,7 @@ import {ProgressBar} from "react-bootstrap";
 import Bid from "./Bid";
 import {useSelector} from "react-redux";
 import {selectUser} from "../store/userSlice";
+import Cancel from "./Cancel";
 
 const renderer = ({days, hours, minutes, seconds, completed, props}) => {
     if (completed) {
@@ -15,9 +16,15 @@ const renderer = ({days, hours, minutes, seconds, completed, props}) => {
                 </div>
             </div>);
     }
-    // if (props.item.status !== "ongoing") {
-    //     return null;
-    // }
+    if (props.item.status === "cancelled") {
+        return (
+            <div>
+                <ProgressBar now={100} className="mt-1 disabled"/>
+                <div className="d-flex justify-content-center ">
+                    <h5>Cancelled</h5>
+                </div>
+            </div>);
+    }
     const progress =
         ((new Date() - new Date(props.item.start_datetime)) /
             (new Date(props.item.end_datetime) - new Date(props.item.start_datetime))) *
@@ -48,7 +55,7 @@ export const ProductCard = ({item, handle}) => {
 
     return (
         <>
-            {((currentUser?.role !== 2 && currentUser?.role !== 3) && (new Date(item.end_datetime) < new Date())) ? null :
+            {((currentUser?.role !== 2 && currentUser?.role !== 3) && item.status !== "ongoing") ? null :
                 (<div className="col">
                     <div className="card shadow h-100">
                         <div className="card-header">
@@ -67,6 +74,10 @@ export const ProductCard = ({item, handle}) => {
                             <div>
                                 <Bid item={item} key={item.id} handle={handle}/>
                             </div>
+                            {(currentUser?.role === 2 || currentUser?.role === 3) &&
+                                (<div>
+                                    <Cancel item={item} key={item.id} handle={handle}/>
+                                </div>)}
                             <div>
                                 <p className="h3">Price: ${item.current_price}</p>
                             </div>

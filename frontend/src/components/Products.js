@@ -34,6 +34,11 @@ export default function Products() {
     }, []);
     return (
         <div>
+            <div>
+                <h2 className="d-flex justify-content-center">
+                    Products
+                </h2>
+            </div>
             <div className="col my-3">
                 {(currentUser?.role === 2 || currentUser?.role === 3) && (
                     <AddProduct handle={handle}/>

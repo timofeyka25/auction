@@ -34,7 +34,7 @@ const Bid = ({item, handle}) => {
 
     return (
         <>
-            {(new Date(item.end_datetime) < new Date()) ?
+            {item.status !== "ongoing" ?
                 (
                     <div onClick={openForm} className="btn btn-outline-secondary disabled">
                         Bid
