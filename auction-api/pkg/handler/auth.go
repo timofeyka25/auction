@@ -90,3 +90,24 @@ func (h *Handler) changePassword(c *gin.Context) {
 
 	c.JSON(http.StatusOK, statusResponse{"Changed"})
 }
+
+type userResponse struct {
+	Data auction.UserInfo `json:"data"`
+}
+
+func (h *Handler) getUserInfo(c *gin.Context) {
+	id, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	user, err := h.services.Authorization.GetUserInfo(id)
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, userResponse{
+		Data: user,
+	})
+}

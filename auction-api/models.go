@@ -21,13 +21,13 @@ const (
 )
 
 type User struct {
-	ID        int    `json:"-" db:"id"`
-	FirstName string `json:"first_name" db:"first_name"`
-	LastName  string `json:"last_name" db:"last_name"`
-	Username  string `json:"username" db:"username"`
-	Password  string `json:"password" db:"password_hash"`
-	RoleId    int    `json:"role_id" db:"role_id"`
-	IsActive  bool   `json:"is_active" db:"is_active"`
+	ID        int     `json:"-" db:"id"`
+	FirstName string  `json:"first_name" db:"first_name"`
+	LastName  *string `json:"last_name" db:"last_name"`
+	Username  string  `json:"username" db:"username"`
+	Password  string  `json:"password" db:"password_hash"`
+	RoleId    int     `json:"role_id" db:"role_id"`
+	IsActive  bool    `json:"is_active" db:"is_active"`
 }
 
 type UserInfo struct {

@@ -63,6 +63,10 @@ func (s *AuthService) GetUserRole(username, password string) (int, error) {
 	return user.RoleId, nil
 }
 
+func (s *AuthService) GetUserInfo(id int) (auction.UserInfo, error) {
+	return s.repo.GetUserInfo(id)
+}
+
 func (s *AuthService) ParseToken(accessToken string) (int, int, error) {
 	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

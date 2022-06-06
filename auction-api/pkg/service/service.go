@@ -11,6 +11,7 @@ type Authorization interface {
 	ParseToken(token string) (int, int, error)
 	ChangePassword(username, password, newPassword string) error
 	GetUserRole(username, password string) (int, error)
+	GetUserInfo(id int) (auction.UserInfo, error)
 }
 
 type Product interface {

@@ -81,6 +81,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 		api.POST("/", h.user)
 		api.GET("/role", h.getRole)
+		api.GET("/account", h.getUserInfo)
 	}
 	return router
 }

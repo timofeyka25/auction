@@ -10,6 +10,7 @@ type Authorization interface {
 	CreateUser(user auction.User) (int, error)
 	GetUser(username, password string) (auction.User, error)
 	ChangePassword(username, password, newPassword string) error
+	GetUserInfo(id int) (auction.UserInfo, error)
 }
 
 type Product interface {
