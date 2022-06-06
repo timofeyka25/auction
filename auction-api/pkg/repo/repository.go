@@ -3,6 +3,7 @@ package repo
 import (
 	auction "auction-api"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 type Authorization interface {
@@ -21,6 +22,7 @@ type Product interface {
 	GetAllCategories() ([]auction.ProductCategory, error)
 	GetCategories() ([]auction.ProductCategory, error)
 	GetProductsByCategoryId(ID int) ([]auction.Product, error)
+	Update(datetime time.Time) error
 }
 
 type Bid interface {

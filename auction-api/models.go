@@ -84,7 +84,7 @@ type BidInput struct {
 
 func (i UpdateProductInput) Validate() error {
 	if i.Title == nil && i.Description == nil && i.CategoryId == nil && i.StartDatetime == nil && i.EndDatetime == nil &&
-		i.CurrentPrice == nil && i.MinBidValue == nil && i.LastBidUserId == nil {
+		i.CurrentPrice == nil && i.MinBidValue == nil && i.LastBidUserId == nil && i.Status == nil {
 		return errors.New("update structure has no values")
 	}
 	return nil

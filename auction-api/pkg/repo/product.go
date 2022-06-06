@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	"strings"
+	"time"
 )
 
 type ProductMysql struct {
@@ -131,7 +132,8 @@ func (m *ProductMysql) GetAllCategories() ([]auction.ProductCategory, error) {
 
 func (m *ProductMysql) GetCategories() ([]auction.ProductCategory, error) {
 	var categories []auction.ProductCategory
-	query := fmt.Sprintf("select c.id, c.category from %s c join %s p on c.id = p.category_id group by c.id, c.category",
+	query := fmt.Sprintf("select c.id, c.category from %s c join %s p on c.id = p.category_id where p.status = 1 "+
+		"group by c.id, c.category",
 		categoryTable, productTable)
 	err := m.db.Select(&categories, query)
 
@@ -144,4 +146,11 @@ func (m *ProductMysql) GetProductsByCategoryId(ID int) ([]auction.Product, error
 	err := m.db.Select(&products, query, ID)
 
 	return products, err
+}
+
+func (m *ProductMysql) Update(datetime time.Time) error {
+	query := fmt.Sprintf("update %s set status = 2 where end_datetime < ? and status = 1", productTable)
+	_, err := m.db.Exec(query, datetime)
+
+	return err
 }
