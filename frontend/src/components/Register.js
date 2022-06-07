@@ -23,11 +23,22 @@ export const Register = () => {
         if (passwordRef.current.value !== cmfPasswordRef.current.value) {
             return setError("Passwords does not match");
         }
+        let f_name = firstNameRef.current.value.toString()
+        f_name = f_name.trim().replace(/  +/g, ' ')
+        let l_name = firstNameRef.current.value.toString()
+        l_name = l_name.trim().replace(/  +/g, ' ')
+        if (!f_name.length || !l_name.length) {
+            return setError("Incorrect value")
+        }
+        let u_name = usernameRef.current.value.toString()
+        u_name = u_name.trim()
+        if (u_name.indexOf(" ") >= 0)
+            return setError("Incorrect username")
 
         let newUser = {
-            first_name: firstNameRef.current.value,
-            last_name: lastNameRef.current.value,
-            username: usernameRef.current.value,
+            first_name: f_name,
+            last_name: l_name,
+            username: u_name,
             password: passwordRef.current.value,
         };
 
@@ -61,7 +72,7 @@ export const Register = () => {
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Username</Form.Label>
-                            <Form.Control type="text"  required ref={usernameRef}/>
+                            <Form.Control type="text" required ref={usernameRef}/>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Password</Form.Label>

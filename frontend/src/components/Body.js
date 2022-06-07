@@ -35,6 +35,11 @@ export default function Body() {
         dispatch(load({page: 3}))
     }
 
+    const handleAdminPanel = (e) => {
+        e.preventDefault()
+        dispatch(load({page: 4}))
+    }
+
 
     return (
         <div>
@@ -49,6 +54,14 @@ export default function Body() {
                                  onClick={(e) => handleCategories(e)}>
                                 Categories
                             </div>
+                            {currentUser?.role === 3 && (
+                                <div
+                                    onClick={(e) => handleAdminPanel(e)}
+                                    className="btn btn-outline-secondary mx-2 "
+                                >
+                                    Admin panel
+                                </div>
+                            )}
                             {currentUser ? (
                                 <>
                                     <div

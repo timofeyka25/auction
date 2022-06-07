@@ -8,9 +8,7 @@ export default function BidCard({item}) {
     const [showInfo, setShowInfo] = useState(false);
     const [data, setData] = useState([])
 
-    const openInfo = async () => {
-        setShowInfo(true)
-    };
+    const openInfo = () => setShowInfo(true);
     const closeInfo = () => setShowInfo(false);
 
     const fetchProduct = () => {

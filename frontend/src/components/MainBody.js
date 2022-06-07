@@ -4,6 +4,7 @@ import {selectPage} from "../store/pageSlice";
 import Categories from "./Categories";
 import Products from "./Products";
 import Account from "./Account"
+import AdminPanel from "./AdminPanel";
 
 export default function MainBody() {
     const currentPage = useSelector(selectPage)
@@ -16,6 +17,7 @@ export default function MainBody() {
                 {(currentPage?.page === -1) && <Categories/>}
                 {currentPage?.page === 2 && <Products/>}
                 {currentPage?.page === 3 && <Account/>}
+                {currentPage?.page === 4 && <AdminPanel/>}
             </div>
         </div>)
 }
