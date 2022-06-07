@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {axiosPrivate} from "../api/axios";
+import ChangePassword from "./ChangePassword";
 
 const GET_URL = "/api/account/"
 export default function AccountCard() {
@@ -24,7 +25,7 @@ export default function AccountCard() {
                     {data?.role_id && data.role_id === 3 ? <h4>Role: admin</h4> : null}
                     <hr/>
                     <div className="justify-content-center d-flex my-2">
-                        <div className="btn btn-outline-dark">Change password</div>
+                        <ChangePassword/>
                     </div>
                 </div>
             </div>
