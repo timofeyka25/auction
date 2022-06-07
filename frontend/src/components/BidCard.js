@@ -29,7 +29,7 @@ export default function BidCard({item}) {
         <>
             <div className="card shadow-lg my-2">
                 <div className="card-body d-flex justify-content-around align-items-center">
-                    <div className="col-2">
+                    <div className="col-3">
                         Price: ${item.price}
                     </div>
                     <div className="col-auto btn btn-outline-dark" onClick={openInfo}>

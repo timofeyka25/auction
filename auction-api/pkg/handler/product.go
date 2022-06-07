@@ -166,3 +166,19 @@ func (h *Handler) getProductsByCategoryId(c *gin.Context) {
 		Data: products,
 	})
 }
+
+func (h *Handler) boughtProducts(c *gin.Context) {
+	userID, err := getUserId(c)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	products, err := h.services.Product.GetBoughtProducts(userID)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, getAllProductsResponse{
+		Data: products,
+	})
+}

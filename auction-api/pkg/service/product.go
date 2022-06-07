@@ -67,6 +67,13 @@ func (s *ProductService) GetProductsByCategoryId(id int) ([]auction.Product, err
 	return s.repo.GetProductsByCategoryId(id)
 }
 
+func (s *ProductService) GetBoughtProducts(id int) ([]auction.Product, error) {
+	if err := s.UpdateProducts(); err != nil {
+		return nil, err
+	}
+	return s.repo.GetBoughtProducts(id)
+}
+
 func (s *ProductService) UpdateProducts() error {
 	return s.repo.Update(time.Now())
 }

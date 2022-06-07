@@ -50,6 +50,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			product.GET("/", h.getAllProducts)
 			product.GET("/:id", h.getProductByID)
 			product.GET("/bid/:id", h.getProductBids)
+			product.GET("/bought/", h.boughtProducts)
 		}
 		bid := api.Group("/bid")
 		{

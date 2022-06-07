@@ -1,6 +1,7 @@
 import {useState} from "react";
 import AccountCard from "./AccountCard";
 import UserBids from "./UserBids";
+import BoughtProducts from "./BoughtProducts";
 
 export default function Account() {
     const [page, setPage] = useState(1)
@@ -26,7 +27,7 @@ export default function Account() {
             </div>
             {page === 1 && (<AccountCard/>)}
             {page === 2 && (<UserBids/>)}
-            {page === 3 && (<h1>Bought products</h1>)}
+            {page === 3 && (<BoughtProducts/>)}
         </>
     )
 }

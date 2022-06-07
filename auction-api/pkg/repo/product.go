@@ -154,3 +154,13 @@ func (m *ProductMysql) Update(datetime time.Time) error {
 
 	return err
 }
+
+func (m *ProductMysql) GetBoughtProducts(id int) ([]auction.Product, error) {
+	var products []auction.Product
+	query := fmt.Sprintf("select p.* from %s p join %s u on u.id = p.last_bid_user_id where u.id = ? and p.status = ? "+
+		"order by p.end_datetime desc",
+		productTable, userTable)
+	err := m.db.Select(&products, query, id, auction.Sold)
+
+	return products, err
+}

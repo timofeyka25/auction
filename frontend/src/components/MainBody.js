@@ -14,7 +14,6 @@ export default function MainBody() {
                 {(currentPage === null) && <Categories/>}
                 {(currentPage?.page === 1) && <Categories/>}
                 {(currentPage?.page === -1) && <Categories/>}
-                {/*{(currentPage?.page === 0) && <Categories/>}*/}
                 {currentPage?.page === 2 && <Products/>}
                 {currentPage?.page === 3 && <Account/>}
             </div>

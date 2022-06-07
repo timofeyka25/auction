@@ -24,6 +24,7 @@ type Product interface {
 	GetAllCategories() ([]auction.ProductCategory, error)
 	GetCategories() ([]auction.ProductCategory, error)
 	GetProductsByCategoryId(id int) ([]auction.Product, error)
+	GetBoughtProducts(id int) ([]auction.Product, error)
 }
 
 type Bid interface {
