@@ -11,11 +11,11 @@ export default function BoughtProductCard({item}) {
                     <div className="col-3">
                         Price: ${item.current_price}
                     </div>
-                    <div className="col-3">
-                        Time: {new Date(item.start_datetime).toUTCString()}
+                    <div className="col-3 mx-2">
+                        Start time: {new Date(item.start_datetime).toUTCString()}
                     </div>
-                    <div className="col-3">
-                        Time: {new Date(item.end_datetime).toUTCString()}
+                    <div className="col-3 mx-2">
+                        End time: {new Date(item.end_datetime).toUTCString()}
                     </div>
                 </div>
             </div>
