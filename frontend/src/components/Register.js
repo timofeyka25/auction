@@ -25,7 +25,7 @@ export const Register = () => {
         }
         let f_name = firstNameRef.current.value.toString()
         f_name = f_name.trim().replace(/  +/g, ' ')
-        let l_name = firstNameRef.current.value.toString()
+        let l_name = lastNameRef.current.value.toString()
         l_name = l_name.trim().replace(/  +/g, ' ')
         if (!f_name.length || !l_name.length) {
             return setError("Incorrect value")
